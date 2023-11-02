@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Title</title>
+      {% load bootstrap5 %}
+      {% bootstrap_css %}
+      {% bootstrap_javascript %}
+   </head>
+   <body>
+      <!--
+         <form method="post" action="{% url 'main_view' %}">
+           {% csrf_token %}
+
+             <label for="city">City:</label><br>
+             <select name="city" id="city">
+                 <option value="Hamburg">Hamburg</option>
+                 <option value="Berlín">Berlín</option>
+                 <option value="Düsseldorf">Düsseldorf</option>
+                 <option value="Frankfurt">Frankfurt</option>
+                 <option value="Múnich">Múnich</option>
+             </select><br>
+
+             <label for="start_date">Start date:</label><br>
+             <input type="date" id="start_date" name="start_date" pattern="\d{4}-\d{2}-\d{2}" required><br>
+
+             <label for="end_date">End date:</label><br>
+             <input type="date" id="end_date" name="end_date" pattern="\d{4}-\d{2}-\d{2}" required><br>
+
+             <label for="start_hour">Start hour:</label><br>
+             <input type="time" id="start_hour" name="start_hour" required><br>
+
+             <label for="end_hour">End hour:</label><br>
+             <input type="time" id="end_hour" name="end_hour" required><br>
+
+             <input type="submit" value="Submit">
+
+         </form>
+
+         {% if post_mode %}
+
+         <form method="get" action="{% url 'csv_download' %}">
+             <input type="submit" value="Download CSV">
+         </form>
+
+         <img src="{% url 'heatmap_month_vs_hour' %}" alt="Heatmap">
+         <img src="{% url 'heatmap_week_vs_hour' %}" alt="Heatmap2">
+
+         {% endif %}
+         -->
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
+      <div class="container-fluid">
+        <!-- Navbar brand -->
+        <div class="navbar-brand nav-link">
+          <strong>finerquants</strong>
+        </div>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+          aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarExample01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="{% url 'main_view' %}">Home</a>
+            </li>
+          </ul>
+      </div>
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+
+
+      <!--Main Navigation-->
+      <header>
+         <style>
+            #intro {
+            background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+            height: 100vh;
+            }
+            /* Height for devices larger than 576px */
+            @media (min-width: 992px) {
+            #intro {
+            margin-top: -58.59px;
+            }
+            }
+            .navbar .nav-link {
+            color: #fff !important;
+            }
+         </style>
+         <!-- Background image -->
+         <div id="intro" class="bg-image shadow-2-strong">
+            <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+               <div class="container">
+                  <div class="row justify-content-center">
+                     <div class="col-xl-5 col-md-8">
+                        <form class="bg-white  rounded-5 shadow-5-strong p-5" method="post" action="{% url 'main_view' %}">
+                           {% csrf_token %}
+                           <!-- Email input -->
+                           <div class="form-outline mb-4">
+                              <label class="form-label" for="city">City:</label><br>
+                              <select class="form-control" name="city" id="city">
+                                 <option value="Hamburg">Hamburg</option>
+                                 <option value="Berlín">Berlín</option>
+                                 <option value="Düsseldorf">Düsseldorf</option>
+                                 <option value="Frankfurt">Frankfurt</option>
+                                 <option value="Múnich">Múnich</option>
+                              </select>
+                              <br>
+                           </div>
+                           <!-- Start date input -->
+                           <div class="form-outline mb-4">
+                              <label class="form-check-label" for="start_date">Start date:</label><br>
+                              <input class="form-control" value="{{ request.POST.start_date|default:'' }}" type="date" id="start_date" name="start_date" pattern="\d{4}-\d{2}-\d{2}" required min="1990-01-01" max="2023-10-31"><br>
+                           </div>
+                           <!-- End date input -->
+                           <div class="form-outline mb-4">
+                              <label class="form-check-label" for="end_date">End date:</label><br>
+                              <input class="form-control" value="{{ request.POST.end_date|default:'' }}" type="date" id="end_date" name="end_date" pattern="\d{4}-\d{2}-\d{2}" required min="1990-01-01" max="2023-10-31"><br>
+                           </div>
+                           <!-- Start hour and End hour input -->
+                           <div class="row">
+                              <div class="col-md-6">
+                                 <div class="form-outline mb-4">
+                                    <label class="form-check-label" for="start_hour">Start hour:</label><br>
+                                    <input class="form-control" value="{{ request.POST.start_hour|default:'' }}" type="time" id="start_hour" name="start_hour" required min="00:00" max="23:00"><br>
+                                 </div>
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="form-outline mb-4">
+                                    <label class="form-check-label" for="end_hour">End hour:</label><br>
+                                    <input class="form-control" value="{{ request.POST.end_hour|default:'' }}" type="time" id="end_hour" name="end_hour" required min="00:00" max="23:00"><br>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Submit button -->
+                           <button type="submit" class="btn btn-primary btn-block">Check data</button>
+                        </form>
+                         {% if error %}
+                            <p style="color: red">Dates and hours should be in the correct order</p>
+                         {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Background image -->
+      </header>
+      <!--Main Navigation--
+   </body>
+</html>

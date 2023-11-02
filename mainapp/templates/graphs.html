@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Title</title>
+      {% load bootstrap5 %}
+      {% bootstrap_css %}
+      {% bootstrap_javascript %}
+   </head>
+   <body>
+      <!--Main Navigation-->
+      <header>
+      <style>
+         #intro {
+         background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+         height: 100vh;
+         }
+         /* Height for devices larger than 576px */
+         @media (min-width: 992px) {
+         #intro {
+         margin-top: -58.59px;
+         }
+         }
+         .navbar .nav-link {
+         color: #fff !important;
+         }
+      </style>
+      <!-- Background image -->
+      <body>
+         <div id="intro" class="bg-image shadow-2-strong">
+            <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+               <div class="container">
+                  <div class="row justify-content-center">
+                     <div class="">
+                        {% if post_mode %}
+                        <form method="get" action="{% url 'csv_download' %}">
+                           <button type="submit" class="btn btn-primary btn-block">Download CSV</button>
+                        </form>
+                        <div style="display: flex; justify-content: space-between;">
+                           <img src="{% url 'heatmap_month_vs_hour' %}" alt="Heatmap">
+                           <img src="{% url 'heatmap_week_vs_hour' %}" alt="Heatmap2">
+                        </div>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+   </body>
